@@ -1,3 +1,4 @@
+import connection as con
 import csv_to_matrix as ctm
 
 """Returns matrix containing every taken route with their quantity (how often they appear)"""
@@ -31,7 +32,7 @@ def get_routes_quantity():
 
 def get_routes_quantity_shadow(lst):
     route, route_freq, k = lst, [], 0
-    lst1 = []
+
     for i in range(len(route)):
         m = 0
         for j in range(len(route)):
@@ -129,3 +130,41 @@ def get_routes_quantity_per_hour():
     return [list_00, list_01, list_02, list_03, list_04, list_05, list_06, list_07, list_08, list_09, list_10, list_11,
         list_12, list_13, list_14, list_15, list_16, list_17, list_18, list_19, list_20, list_21, list_22,
         list_23]
+
+
+"""Returns list with dictionary elements: [{edge number/e.g. 894: quantity/e.g. 77, 'percentage': e.g. 1.024}, ...]; 
+quantity is how often the edge appears in 3212 routes"""
+
+
+def get_edges_quantity():
+    routes = [el[:-3] for el in ctm.csv_to_matrix('route-all.csv')]
+    edges = []
+    counter = []
+
+    for i in range(len(routes)):
+        for j in range(1, len(routes[i])):
+            dic = con.get_connection(routes[i][j-1], routes[i][j])
+            num = dic.get('number')
+            edges.append(int(num))
+
+    for i in range(1308):
+        c = edges.count(i)
+        per = c/3212 + 1
+        counter.append({i: c, 'percentage': round(per, 4)})
+        # percentage format: int("{:.01%}".format(per))
+
+    return counter
+
+
+"""Returns list with percentage of edge appearance in decimal"""
+
+
+def get_edge_quan_per():
+    per = []
+    edges = get_edges_quantity()
+
+    for edge in edges:
+        per.append(edge.get('percentage'))
+
+    return per
+
