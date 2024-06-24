@@ -24,3 +24,14 @@ if __name__ == '__main__':
     dur.get_routes_duration()
     quan.get_routes_quantity()
     dis.get_edge_num_dist(0)"""
+    # com.completing()
+    # com.get_speed_from_neighbors()
+    # geq = quan.get_edges_quantity()
+    # print(geq)
+    # print(quan.get_edge_quan_per())
+    # dist = dis.get_distance_list()
+    # print(dist[0])
+    graph = pc.parse_csv()
+    fro = graph[1].get('from')
+    print(str(fro))
+

@@ -24,3 +24,16 @@ def get_routes_duration():
         t = float(round((round(summe, 2) - int(round(summe, 2)))*60))/100 + int(round(summe, 2))
         res.append(t)
     return res
+
+
+def get_edges_duration():
+    data = ctm.csv_to_matrix('data-all-completed-final.csv')
+    dist = dis.get_distance_list()
+    res = []
+    for j in range(len(data[1]) - 4):
+        speed = float(data[1][j])
+        if speed == 0:
+            continue
+        time = (dist[j] / speed) * 60
+        res.append(time)
+    return res
