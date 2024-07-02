@@ -35,10 +35,5 @@ def get_edges_duration():
         if speed == 0:
             continue
         time = (dist[j] / speed) * 60
-        t = float(round((round(time, 2) - int(round(time, 2))) * 60)) / 100 + int(round(time, 2))
-        res.append(t)
+        res.append(time)
     return res
-
-
-# print(get_routes_duration())
-print(get_edges_duration())

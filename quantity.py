@@ -140,6 +140,7 @@ def get_edges_quantity():
     routes = [el[:-3] for el in ctm.csv_to_matrix('route-all.csv')]
     edges = []
     counter = []
+    most_used = []
 
     for i in range(len(routes)):
         for j in range(1, len(routes[i])):
@@ -152,8 +153,10 @@ def get_edges_quantity():
         per = c/3212 + 1
         counter.append({i: c, 'percentage': round(per, 4)})
         # percentage format: int("{:.01%}".format(per))
+        if c >= 400:
+            most_used.append(i)
 
-    return counter
+    return most_used
 
 
 """Returns list with percentage of edge appearance in decimal"""
@@ -168,3 +171,24 @@ def get_edge_quan_per():
 
     return per
 
+
+def get_nodes_quantity():
+    routes = [el[:-3] for el in ctm.csv_to_matrix('route-all.csv')]
+    nodes = []
+    counter = []
+    most_used = []
+
+    for i in range(len(routes)):
+        for j in range(len(routes[i])):
+            nodes.append(int(routes[i][j]))
+
+    for i in range(538):
+        c = nodes.count(i)
+        counter.append({i: c})
+        if c >= 400:
+            most_used.append(i)
+
+    return counter, most_used
+
+
+print(get_nodes_quantity())
