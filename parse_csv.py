@@ -14,4 +14,5 @@ def parse_csv():
         ls.append({'number': num, 'name': name, 'from': fro, 'to': to, 'lon1': lon1, 'lat1': lat1,
                    'lon2': lon2, 'lat2': lat2})
     fd.close()
+    ls.pop(0)
     return ls

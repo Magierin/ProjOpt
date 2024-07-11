@@ -26,6 +26,9 @@ def get_routes_duration():
     return res
 
 
+"""To get a different timestamp for the dijkstra, change the number from data[1] to data[8] or something different"""
+
+
 def get_edges_duration():
     data = ctm.csv_to_matrix('data-all-completed-final.csv')
     dist = dis.get_distance_list()
@@ -35,5 +38,25 @@ def get_edges_duration():
         if speed == 0:
             continue
         time = (dist[j] / speed) * 60
-        res.append(time)
+        t = float(round((round(time, 2) - int(round(time, 2))) * 60)) / 100 + int(round(time, 2))
+        res.append(t)
     return res
+
+
+def get_edges_predicted_duration():
+    data = ctm.csv_to_matrix('predictions_2024.csv')
+    del data[0]
+    for i in range(len(data)):
+        del data[i][0:5]
+    dist = dis.get_distance_list()
+    res = []
+    for j in range(len(data[500])-2):
+        speed = float(data[500][j])
+        if speed == 0:
+            continue
+        time = (dist[j] / speed) * 60
+        t = float(round((round(time, 2) - int(round(time, 2))) * 60)) / 100 + int(round(time, 2))
+        res.append(t)
+    return res
+
+
