@@ -41,6 +41,3 @@ def get_distance_list():
 
 def get_edge_num_dist(num):
     return get_distance_list()[num]
-
-
-print(get_distance_list())

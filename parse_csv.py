@@ -14,5 +14,17 @@ def parse_csv():
         ls.append({'number': num, 'name': name, 'from': fro, 'to': to, 'lon1': lon1, 'lat1': lat1,
                    'lon2': lon2, 'lat2': lat2})
     fd.close()
-    ls.pop(0)
+    return ls
+
+
+def parse_csv_new():
+    fd = open('graph_updated.csv')
+    ls = []
+    for line in fd:
+        spalten = line.split(',')
+        gespalten = [x.strip() for x in spalten]
+        num, name, fro, to, lon1, lat1, lon2, lat2 = gespalten
+        ls.append({'number': num, 'name': name, 'from': fro, 'to': to, 'lon1': lon1, 'lat1': lat1,
+                   'lon2': lon2, 'lat2': lat2})
+    fd.close()
     return ls

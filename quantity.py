@@ -5,7 +5,7 @@ import csv_to_matrix as ctm
 
 
 def get_routes_quantity():
-    route, route_freq, k = [el[:-3] for el in ctm.csv_to_matrix('route-all.csv')], [], 0
+    route, route_freq, k = [el[:-3] for el in ctm.csv_to_matrix('route-all-missing-last-day.csv')], [], 0
 
     for i in range(len(route)):
         m = 0
@@ -21,10 +21,10 @@ def get_routes_quantity():
     lst = []
     for i in range(len(route_freq)):
         lst.append(route_freq[i][1])
-        if route_freq[i][1] == 510:
-            print(route_freq[i][0])
+        # if route_freq[i][1] == 510:
+        #     print(route_freq[i][0])
 
-    return route_freq, lst
+    return route_freq
 
 
 """Same as getRoutesQuantity, just with a list as an input; later used for routes per hour"""
@@ -137,9 +137,10 @@ quantity is how often the edge appears in 3212 routes"""
 
 
 def get_edges_quantity():
-    routes = [el[:-3] for el in ctm.csv_to_matrix('route-all.csv')]
+    routes = [el[:-3] for el in ctm.csv_to_matrix('route-all-missing-last-day.csv')]
     edges = []
     counter = []
+    most_used = []
 
     for i in range(len(routes)):
         for j in range(1, len(routes[i])):
@@ -149,14 +150,13 @@ def get_edges_quantity():
 
     for i in range(1308):
         c = edges.count(i)
-        per = c/3212 + 1
+        per = c/len(routes)
         counter.append({i: c, 'percentage': round(per, 4)})
         # percentage format: int("{:.01%}".format(per))
+        if c >= 400:
+            most_used.append(i)
 
     return counter
-
-
-print(get_edges_quantity())
 
 
 """Returns list with percentage of edge appearance in decimal"""
@@ -171,3 +171,35 @@ def get_edge_quan_per():
 
     return per
 
+
+
+"""Returns list dictionaries as elements: [{0: 0}, ..., {94: 3212}, ... ] with {node: frequency in historical routes}"""
+
+
+def get_nodes_quantity():
+    routes = [el[:-3] for el in ctm.csv_to_matrix('route-all.csv')]
+    nodes = []
+    counter = []
+    most_used = []
+
+    for i in range(len(routes)):
+        for j in range(len(routes[i])):
+            nodes.append(int(routes[i][j]))
+
+    for i in range(538):
+        c = nodes.count(i)
+        counter.append({i: c})
+        if c >= 400:
+            most_used.append(i)
+
+    return counter
+
+
+def get_nodes_quan_per():
+    per = []
+    nodes = get_nodes_quantity()
+
+    for i in range(len(nodes)):
+        per.append(nodes[i].get(i)/3212)
+
+    return per

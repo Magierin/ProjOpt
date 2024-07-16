@@ -100,17 +100,17 @@ def get_neighbors(missing_ind):
         tmp_list = []
 
         for j in range(1, len(p)):
-            if ('number', str(i)) in p[j].items():
+            if ('name', str(i)) in p[j].items():
                 f = p[j]['from']
                 t = p[j]['to']
 
                 for n in range(1, len(p)):
                     if ('to', f) in p[n].items():
-                        x1 = int(p[n]['number'])
+                        x1 = int(p[n]['name'])
                         if x1 not in missing_ind:
                             tmp_list.append(x1)
                     elif ('from', t) in p[n].items():
-                        y1 = int(p[n]['number'])
+                        y1 = int(p[n]['name'])
                         if y1 not in missing_ind:
                             tmp_list.append(y1)
 

@@ -58,5 +58,3 @@ def get_edges_predicted_duration():
         t = float(round((round(time, 2) - int(round(time, 2))) * 60)) / 100 + int(round(time, 2))
         res.append(t)
     return res
-
-
