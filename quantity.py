@@ -58,7 +58,7 @@ def get_routes_quantity_shadow(lst):
 
 
 def get_routes_quantity_per_hour():
-    route = [el for el in ctm.csv_to_matrix('route-all.csv')]
+    route = [el for el in ctm.csv_to_matrix('route-all-missing-last-day.csv')]
     list_00, list_01, list_02, list_03, list_04, list_05, list_06, list_07, list_08, list_09, list_10, list_11, \
         list_12, list_13, list_14, list_15, list_16, list_17, list_18, list_19, list_20, list_21, list_22, \
         list_23 = [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []
@@ -130,6 +130,26 @@ def get_routes_quantity_per_hour():
     return [list_00, list_01, list_02, list_03, list_04, list_05, list_06, list_07, list_08, list_09, list_10, list_11,
         list_12, list_13, list_14, list_15, list_16, list_17, list_18, list_19, list_20, list_21, list_22,
         list_23]
+
+
+def get_edges_quan_per_hour_per(hour_routes):
+    routes = hour_routes
+    edges = []
+    counter = []
+
+    for i in range(len(routes)):
+        for j in range(1, len(routes[i])):
+            dic = con.get_connection(routes[i][j - 1], routes[i][j])
+            num = dic.get('number')
+            edges.append(int(num))
+
+    for i in range(1308):
+        c = edges.count(i)
+        per = c / len(routes)
+        counter.append(round(per, 4))
+
+    return counter
+
 
 
 """Returns list with dictionary elements: [{edge number/e.g. 894: quantity/e.g. 77, 'percentage': e.g. 1.024}, ...]; 
