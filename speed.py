@@ -1,5 +1,7 @@
-import csv_to_matrix as ctm
 import completing as com
+import csv_to_matrix as ctm
+
+'''Takes file and a number; creates a new data_all csv file'''
 
 
 def get_speed_from_neighbors(data, num):
@@ -19,11 +21,6 @@ def get_speed_from_neighbors(data, num):
         ind[i] -= j
         del missing_ind[ind[i]]
         j += 1
-
-    print(missing_ind)
-    print(neighbors_new)
-    print(len(missing_ind))
-    print(len(neighbors_new))
 
     avg_list_list = []
     for i, neighbors_i in enumerate(neighbors_new):
@@ -59,8 +56,10 @@ def get_speed_from_neighbors(data, num):
     o.close()
 
 
-# get_speed_from_neighbors('data-all.csv', 0)
-# for z in range(1, 7):
-#     get_speed_from_neighbors('data-all-final-new-{num}.csv'.format(num=z-1), z)
+'''Creates data-all-final-new.csv'''
 
 
+def create_data_all_final_new():
+    get_speed_from_neighbors('data-all.csv', 0)
+    for z in range(1, 7):
+        get_speed_from_neighbors('data-all-final-new-{num}.csv'.format(num=z-1), z)

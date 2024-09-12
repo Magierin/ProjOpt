@@ -1,6 +1,6 @@
+import connection as con
 import csv_to_matrix as ctm
 import parse_csv as pc
-import connection as c
 
 """Creates data-all-completed.csv: half completed data, edge weight from reversed edge"""
 
@@ -22,7 +22,7 @@ def completing():
                 m += 1
                 continue
 
-    p = pc.parse_csv()
+    p = pc.graph
     n = 0
     ls2 = []
     ls4 = []
@@ -31,9 +31,9 @@ def completing():
             if ('number', str(i)) in p[j].items():
                 f = p[j]["from"]
                 t = p[j]["to"]
-                if c.get_connection(f, t) and c.get_connection(t, f):
-                    x = c.get_connection(f, t)
-                    y = c.get_connection(t, f)
+                if con.get_connection(f, t) and con.get_connection(t, f):
+                    x = con.get_connection(f, t)
+                    y = con.get_connection(t, f)
                     ls2.append(int(y["number"]))
                     ls4.append(int(x["number"]))
                     n += 1
@@ -94,7 +94,7 @@ def completing():
 
 def get_neighbors(missing_ind):
     neighbors = []
-    p = pc.parse_csv()
+    p = pc.graph
 
     for i in missing_ind:
         tmp_list = []

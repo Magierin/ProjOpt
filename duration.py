@@ -1,14 +1,14 @@
-import csv_to_matrix as ctm
-import int_route_edges as ire
 import connection as con
+import csv_to_matrix as ctm
 import distance as dis
-
+import int_route_edges as ire
+import parse_csv as pc
 
 """Returns list with the duration of every single route from route-all.csv"""
 
 
 def get_routes_duration():
-    data = ctm.csv_to_matrix('data-all-final-new.csv')
+    data = ctm.data_all_final_new
     ls = ire.int_route_edges()
     res = []
     for i in range(len(ls)):
@@ -28,14 +28,12 @@ def get_routes_duration():
     return res
 
 
-print(get_routes_duration())
-
-
-"""To get a different timestamp for the dijkstra, change the number from data[1] to data[8] or something different"""
+"""To get a different timestamp for the dijkstra, change the number from data[1] to data[8] or something different;
+returns list with duration of each edge in timestamp 1"""
 
 
 def get_edges_duration():
-    data = ctm.csv_to_matrix('data-all-final-new.csv')
+    data = ctm.data_all_final_new
     dist = dis.get_distance_list()
     res = []
     for j in range(len(data[1]) - 4):
@@ -46,6 +44,9 @@ def get_edges_duration():
         t = float(round((round(time, 2) - int(round(time, 2))) * 60)) / 100 + int(round(time, 2))
         res.append(t)
     return res
+
+
+'''Returns durations for predicted speeds from csv-file predictions_2024'''
 
 
 def get_edges_predicted_duration():
@@ -63,3 +64,48 @@ def get_edges_predicted_duration():
         t = float(round((round(time, 2) - int(round(time, 2))) * 60)) / 100 + int(round(time, 2))
         res.append(t)
     return res
+
+
+'''Takes timestamp in form of '28 Mar 00_09_47'; returns list with predicted edge durations'''
+
+
+def get_edges_predicted_duration_new(timestamp):
+    data = ctm.data_all_final_new
+    p = pc.graph
+
+    a = timestamp.split()
+    b = []
+
+    for i in range(1, len(data)):
+        if data[i][len(data[i])-3:] == a:
+            b = data[i][:len(data)-4]
+            break
+
+    dist = dis.get_distance_list()
+    res = []
+
+    for j in range(1, len(p)):
+        c = p[j].get('name')
+        speed = float(b[data[0].index(c)])
+        if speed == 0:
+            speed = 10000
+        time = (dist[j-1] / speed) * 60
+        t = float(round((round(time, 2) - int(round(time, 2))) * 60)) / 100 + int(round(time, 2))
+        res.append(t)
+
+    return res
+
+
+'''Takes timestamp in form of '28 Mar 00_09_47'; returns list with edge durations'''
+
+
+def get_duration(timestamp):
+    data = ctm.csv_to_matrix('duration_prediction_new.csv')
+
+    a = timestamp.split('.', 2)
+    a[0], a[1] = a[1], a[0]
+    a[2] = a[2].strip()
+
+    for i in range(1, len(data)):
+        if data[i][1:4] == a:
+            return data[i][5:]

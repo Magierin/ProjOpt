@@ -5,7 +5,7 @@ import parse_csv as pc
 
 
 def get_coordinates():
-    ls = pc.parse_csv()
+    ls = pc.graph
     co = []
     for i in range(1, len(ls)):
         lon1 = ls[i].get("lon1")

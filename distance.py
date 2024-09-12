@@ -1,5 +1,5 @@
+import coordinates as coo
 import math
-import coordinates as c
 
 # lon1 = -87.6828811088
 # lon2 = -87.6746939239
@@ -24,7 +24,7 @@ def get_distance(lon1, lon2, lat1, lat2):
 
 
 def get_distance_list():
-    lst = c.get_coordinates()
+    lst = coo.get_coordinates()
     ls = []
     for i in range(len(lst)):
         lat = (lst[i][1] + lst[i][3]) / 2 * 0.0174533

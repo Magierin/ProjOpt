@@ -5,7 +5,7 @@ import csv_to_matrix as ctm
 
 
 def int_route_edges():
-    ls = ctm.csv_to_matrix('route-all-missing-last-day.csv')
+    ls = ctm.route_all_missing_last_day
     for i in range(len(ls)):
         for j in range(len(ls[i]) - 3):
             ls[i][j] = int(ls[i][j])

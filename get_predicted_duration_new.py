@@ -1,6 +1,8 @@
-import parse_csv as pc
 import csv_to_matrix as ctm
 import distance as dis
+import parse_csv as pc
+
+'''Returns dictionary; key: edge name from graph_updated.csv, value: distance from node A to node B in miles'''
 
 
 def distance_dict():
@@ -16,7 +18,10 @@ def distance_dict():
     return names
 
 
-def get_edges_predicted_duration_new(date):
+'''Converts list elements '"94"' to '94', so we can work with the numbers'''
+
+
+def convert_list_elements():
     data = ctm.csv_to_matrix('predictions_2024_last.csv')
     ls = []
 
@@ -26,7 +31,17 @@ def get_edges_predicted_duration_new(date):
             tmp.append(data[m][n].replace('"', ''))
         ls.append(tmp)
 
-    pn = pc.parse_csv_new()
+    return ls
+
+
+'''Takes number that correlates to the index of a line in data_all_final_new: number 0 -> timestamp 28 Mar 00_09_47;
+returns list with predicted duration of visiting a edge (edge name)'''
+
+
+def get_edges_predicted_duration_new(date):
+    ls = convert_list_elements()
+
+    pn = pc.parse_csv('grah_updated.csv')
     p = []
     for i in range(1, len(pn)):
         p.append(pn[i].get('name'))
@@ -47,15 +62,11 @@ def get_edges_predicted_duration_new(date):
     return res
 
 
-def create_duration_predicted_csv():
-    data = ctm.csv_to_matrix('predictions_2024_last.csv')
-    ls = []
+'''Creates csv duration_prediction_last.csv'''
 
-    for m in range(len(data)):
-        tmp = []
-        for n in range(len(data[0])):
-            tmp.append(data[m][n].replace('"', ''))
-        ls.append(tmp)
+
+def create_duration_predicted_csv():
+    ls = convert_list_elements()
 
     p = ls[0]
 
